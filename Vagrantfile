@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.hostname = 'backup-cookbook-berkshelf'
+  config.vm.hostname = 'backup'
 
   # Set the version of chef to install using the vagrant-omnibus plugin
   # NOTE: You will need to install the vagrant-omnibus plugin:
@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   # If this value is a shorthand to a box in Vagrant Cloud then
   # config.vm.box_url doesn't need to be specified.
-  config.vm.box = 'bento/ubuntu-14.04'
+  config.vm.box = 'bento/ubuntu-16.04'
 
 
   # Assign this VM to a host-only network IP, allowing you to access it
@@ -76,15 +76,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
-      mysql: {
-        server_root_password: 'rootpass',
-        server_debian_password: 'debpass',
-        server_repl_password: 'replpass'
+      backup: {
+        aws: {
+          access_key_id: 'access_key_id',
+          secret_access_key: 'secret_access_key'
+        },
+        database: {
+          name: 'db_name',
+          username: 'username',
+          password: 'user_password'
+        }
       }
     }
 
     chef.run_list = [
-      'recipe[backup-cookbook::default]'
+      'recipe[rentmania-backup::default]'
     ]
   end
 end
