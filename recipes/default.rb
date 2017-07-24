@@ -1,5 +1,3 @@
-include_recipe 'backup::default'
-
 package "ruby-full"
 backup_install node.name
 backup_generate_config node.name
@@ -20,9 +18,9 @@ backup_generate_model "MySQL" do
     }
   })
   options({
-    "db.name" => "#{node['backup']['database']['name']}",
-    "db.username" => "#{node['backup']['database']['username']}",
-    "db.password" => "#{node['backup']['database']['password']}"
+    "db.name" => "\"#{node['backup']['database']['name']}\"",
+    "db.username" => "\"#{node['backup']['database']['username']}\"",
+    "db.password" => "\"#{node['backup']['database']['password']}\""
   })
   hour '*'
   minute '*/5'
