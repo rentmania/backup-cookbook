@@ -1,3 +1,5 @@
+include_recipe 'backup'
+
 package "ruby-full"
 backup_install node.name
 backup_generate_config node.name
