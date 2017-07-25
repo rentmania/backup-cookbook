@@ -6,7 +6,7 @@ backup_generate_config node.name
 gem_package "fog" do
   version "~> 1.4.0"
 end
-backup_generate_model "MySQL" do
+backup_generate_model node.name do
   database_type "MySQL"
   store_with({
     "engine" => "S3",
@@ -16,7 +16,7 @@ backup_generate_model "MySQL" do
       "s3.region" => "eu-west-1",
       "s3.bucket" => "#{node['backup']['aws']['bucket']}",
       "s3.path" => "/",
-      "s3.keep" => 100
+      "s3.keep" => 10
     }
   })
   options({
