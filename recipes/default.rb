@@ -16,7 +16,7 @@ backup_generate_model node.name do
       "s3.region" => "eu-west-1",
       "s3.bucket" => "#{node['backup']['aws']['bucket']}",
       "s3.path" => "/",
-      "s3.keep" => 10
+      "s3.keep" => 720
     }
   })
   options({
@@ -25,6 +25,5 @@ backup_generate_model node.name do
     "db.password" => "\"#{node['backup']['database']['password']}\""
   })
   hour '*'
-  minute '*/5'
   action :backup
 end
